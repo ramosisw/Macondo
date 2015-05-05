@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Macondo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_edit">Editar</string>
+    <string name="title_activity_main">Inicio</string>
+    <string name="title_section_acerca_de">Acerca de</string>
+    <string name="title_section_lugares">Lugares</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="str_que_es_macondo">¿Qué es Macondo?</string>
+    <string name="str_respuesta_que_es_macondo">Macondo es un pueblo ficticio descrito en la novela Cien años de soledad del colombiano, premio Nobel de literatura, Gabriel García Márquez. En 2004, por una iniciativa local, se propuso renombrar a Aracataca, localidad natal de Gabriel García Márquez, como Macondo con el fin de reactivar la economía de este pueblo, sumido en tal pobreza que se ha declarado en quiebra. Sin embargo, el referéndum realizado en Aracataca mostró un escaso interés por parte de sus habitantes y la medida no fue aprobada.</string>
+    <string name="str_donde_esta_macondo">¿Donde esta Macondo?</string>
+    <string name="str_respuesta_done_esta_macondo">Macondo fue construido a orillas de un río "con un lecho de piedras pulidas, blancas y enormes como huevos prehistóricos".5 Está al oeste de Riohacha, separada por una sierra casi impenetrable. Al sur la villa limita con las ciénagas y pantanos cubiertos "de una eterna nata vegetal"; al oeste se encuentra la Ciénaga Grande, que según los relatos de los gitanos que visitan Macondo cada año, es una extensión acuática sin horizontes y está habitada por cetáceos de piel delicada con torso y cabeza de mujer y causan la ruina de los marineros. Al norte, una expedición formada por su fundador primero se encontró con un terreno dócil, pero luego por mucho tiempo caminaron por pantano y selva tupida, hasta que encontraron agua, por lo que se llegó a creer que Macondo era una península.</string>
+    <string name="title_section_mapa">Mapa</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_section_nuevo_lugar">Agregar Lugar</string>
+    <string name="str_nombre">Nombre</string>
+    <string name="str_direccion">Direccion</string>
+    <string name="str_referencias">Referencias</string>
+    <string name="title_section_ver_lugar">Ver Lugar</string>
+    <string name="str_latitud">Latitud</string>
+    <string name="str_longitud">Longitud</string>
+    <string name="str_btn_tomar_foto">Tomar Foto</string>
+    <string name="str_caracteristicas">Caracteristicas</string>
+    <string name="str_lugar_vacio">Anda! Agrega un Lugar ;)</string>
+
+
+</resources>
