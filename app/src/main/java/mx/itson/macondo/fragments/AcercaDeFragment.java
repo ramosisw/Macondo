@@ -43,12 +43,6 @@ public class AcercaDeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_acerca_de, container, false);
-        rootView.findViewById(R.id.btn_lugares).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         return rootView;
     }
 

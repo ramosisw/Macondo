@@ -4,19 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 import mx.itson.macondo.R;
+import mx.itson.macondo.entidades.LugarEntidad;
+import mx.itson.macondo.persistencia.MacondoDbManger;
 import mx.itson.macondo.vistas.MainActivity;
 
 public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragListener {
@@ -24,6 +31,8 @@ public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragList
     View rootView;
     MapView mapView;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private MacondoDbManger macondoDbManager;
+    private List<LugarEntidad> lugares;
 
     public MapaFragment() {
     }
@@ -40,9 +49,12 @@ public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_maps, container, false);
+        macondoDbManager = new MacondoDbManger(this.getActivity());
+        lugares = macondoDbManager.cargarLugares();
         mapView = (MapView) rootView.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         setUpMapIfNeeded();
+
         return rootView;
     }
 
@@ -92,7 +104,15 @@ public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragList
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
             mMap = mapView.getMap();
+            mapView.setClickable(true);
+            mapView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    return motionEvent.getAction() == MotionEvent.ACTION_MOVE || view.onTouchEvent(motionEvent);
+                }
+            });
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
             mMap.setMyLocationEnabled(true);
             MapsInitializer.initialize(getActivity());
             /*Fragment f=getActivity().getSupportFragmentManager().findFragmentById(2131230787);
@@ -112,17 +132,25 @@ public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragList
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        Marker hamburg = mMap.addMarker(new MarkerOptions().position(new LatLng(0, 1))
-                .title("Hamburg"));
-        Marker Macondo = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(1, 1))
-                .title("Macondo")
-                .snippet("Un mundo por conocer...")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher))
-                .draggable(true));
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        LatLng lugarLoc = null;
+        for (LugarEntidad lugar : lugares) {
+            lugarLoc = new LatLng(lugar.getLatitud(), lugar.getLongitud());
+            MarkerOptions mark=new MarkerOptions().position(lugarLoc).title(lugar.getNombre()).snippet(lugar.getDireccion());
+            mMap.addMarker(mark);
+            builder.include(lugarLoc);
+        }
+        LatLngBounds bounds = builder.build();
+        int padding = 20; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        //mMap.animateCamera(cu);
+        try {
+            mMap.animateCamera(cu);
+        } catch (Exception ex) {
+            cu = CameraUpdateFactory.newLatLngZoom(lugarLoc,12);
+            mMap.animateCamera(cu);
+        }
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-        mMap.setOnMarkerDragListener(this);
     }
 
     @Override

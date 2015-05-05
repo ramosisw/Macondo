@@ -63,7 +63,7 @@
                         android:layout_width="125dp"
                         android:layout_height="fill_parent"
                         android:layout_marginRight="10dp"
-                        android:gravity="center|right"
+                        android:gravity="top|right"
                         android:text="@string/str_direccion"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -72,7 +72,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:lines="3"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
 

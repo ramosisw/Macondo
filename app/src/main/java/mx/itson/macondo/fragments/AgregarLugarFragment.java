@@ -252,6 +252,8 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
         } else {
             ubicacion.setPosition(latLng);
         }
+        lugar.setLatitud(latLng.latitude);
+        lugar.setLongitud(latLng.longitude);
         txt_latitud.setText(latLng.latitude + "");
         txt_longitud.setText(latLng.longitude + "");
         myLocationManager.removeUpdates(mLocationListener);
@@ -286,6 +288,7 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
         lugar.setLongitud(latLng.longitude);
         txt_latitud.setText(latLng.latitude + "");
         txt_longitud.setText(latLng.longitude + "");
+
     }
 
     @Override

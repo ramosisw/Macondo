@@ -9,4 +9,5 @@
     -->
     <item name="fragment_lugares" type="layout">@layout/fragment_lugares_grid</item>
     <item name="fragment_agregar_lugar" type="layout">@layout/fragment_agregar_lugar_portail</item>
+    <item name="fragment_ver_lugar" type="layout">@layout/fragment_ver_lugar_portail</item>
 </resources>

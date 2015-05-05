@@ -67,17 +67,6 @@
                     android:layout_below="@+id/tvDondeEstaMacondo"
                     android:text="@string/str_respuesta_done_esta_macondo" />
 
-                <Button
-                    android:id="@+id/btn_lugares"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvDescripcionUbicacion"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_toEndOf="@+id/tvDondeEstaMacondo"
-                    android:padding="20dp"
-                    android:text="@string/title_section_lugares" />
-
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
