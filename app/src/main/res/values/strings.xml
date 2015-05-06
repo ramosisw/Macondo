@@ -31,6 +31,7 @@
     <string name="str_btn_tomar_foto">Tomar Foto</string>
     <string name="str_caracteristicas">Caracteristicas</string>
     <string name="str_lugar_vacio">Anda! Agrega un Lugar ;)</string>
+    <string name="str_message_to_delete">Eliminar Lugar?</string>
 
 
 </resources>

@@ -1,6 +1,8 @@
 package mx.itson.macondo.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -116,9 +118,30 @@ public class LugaresFragment extends Fragment implements AbsListView.OnItemClick
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-        return false;
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int i, long l) {
+        final int id_lugar=items.get(i).getId();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setTitle(getString(R.string.str_message_to_delete));
+        builder.setMessage("No se podra recuperar...");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Si",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        macondoDbManager.eliminarLugar(id_lugar);
+                        items.remove(i);
+                        mAdapter.notifyDataSetChanged();
+                        //notifyDataSetChanged();
+                    }
+                });
+        builder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

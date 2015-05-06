@@ -146,7 +146,7 @@
                     android:visibility="gone">
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/textVie"
                         android:layout_width="125dp"
                         android:layout_height="fill_parent"
                         android:layout_marginRight="10dp"
