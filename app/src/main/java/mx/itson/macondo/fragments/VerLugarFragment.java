@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import mx.itson.macondo.R;
 import mx.itson.macondo.entidades.LugarEntidad;
 import mx.itson.macondo.persistencia.MacondoDbManger;
+import mx.itson.macondo.util.Section;
 import mx.itson.macondo.vistas.MainActivity;
 
 /**
@@ -102,6 +104,7 @@ public class VerLugarFragment extends Fragment implements View.OnClickListener {
         );
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, 18);
         mMap.animateCamera(update);
+        view.findViewById(R.id.imgBtn_edit_lugar).setOnClickListener(this);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setAlpha(0.5f);
         return view;
@@ -150,7 +153,7 @@ public class VerLugarFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
+        //mapView.onDestroy();
     }
 
     @Override
@@ -179,6 +182,14 @@ public class VerLugarFragment extends Fragment implements View.OnClickListener {
                 Uri imgUri = Uri.parse("file:" + lugar.getUri_foto());
                 intent.setDataAndType(imgUri, "image/*");
                 startActivity(intent);
+                break;
+            case R.id.imgBtn_edit_lugar:
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, AgregarLugarFragment.newInstance(Section.LUGAR_EDITAR,lugar.getId()))
+                        .addToBackStack(null)
+                        .commit();
                 break;
         }
     }

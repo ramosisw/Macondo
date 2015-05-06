@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (position != Section.LUGAR_NUEVO && position != Section.LUGAR_VER) {
+        if (position != Section.LUGAR_NUEVO && position != Section.LUGAR_VER && position!= Section.LUGAR_EDITAR) {
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             }
@@ -93,6 +93,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case Section.LUGAR_NUEVO:
                 mTitle = getString(R.string.title_section_nuevo_lugar);
+                break;
+            case Section.LUGAR_EDITAR:
+                mTitle = getString(R.string.title_section_editar_lugar);
                 break;
             case Section.LUGAR_VER:
                 mTitle = getString(R.string.title_section_ver_lugar);

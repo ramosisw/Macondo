@@ -59,7 +59,7 @@ public class MacondoDbManger {
     /**
      * @param lugarEntidad objeto que contiene los datos del lugar
      */
-    public void modificarnombre(LugarEntidad lugarEntidad) {
+    public void modificar(LugarEntidad lugarEntidad) {
         wDb.update(
                 LugarTable.NAME,
                 generarContenValuesLugar(lugarEntidad),
@@ -208,7 +208,6 @@ public class MacondoDbManger {
 
     /**
      * Clase para generar una tabla apartir de sus atributos
-     * <p/>
      * NAME = nombre de la tabla
      * KEY = nombre de indice primario, su tipo y si es autoincrementable
      * COLUMNS = cada una de las columnas que guardaran los datos de la tabla asi como su nombre y tipo

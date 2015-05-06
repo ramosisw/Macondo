@@ -132,11 +132,13 @@ public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragList
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        if (lugares.size() == 0)
+            return;
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         LatLng lugarLoc = null;
         for (LugarEntidad lugar : lugares) {
             lugarLoc = new LatLng(lugar.getLatitud(), lugar.getLongitud());
-            MarkerOptions mark=new MarkerOptions().position(lugarLoc).title(lugar.getNombre()).snippet(lugar.getDireccion());
+            MarkerOptions mark = new MarkerOptions().position(lugarLoc).title(lugar.getNombre()).snippet(lugar.getDireccion());
             mMap.addMarker(mark);
             builder.include(lugarLoc);
         }
@@ -147,7 +149,7 @@ public class MapaFragment extends Fragment implements GoogleMap.OnMarkerDragList
         try {
             mMap.animateCamera(cu);
         } catch (Exception ex) {
-            cu = CameraUpdateFactory.newLatLngZoom(lugarLoc,12);
+            cu = CameraUpdateFactory.newLatLngZoom(lugarLoc, 12);
             mMap.animateCamera(cu);
         }
 

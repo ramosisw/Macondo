@@ -31,7 +31,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -53,6 +52,7 @@ import mx.itson.macondo.vistas.MainActivity;
  */
 public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener, MacondoLocationListener.MacondoLcationListenerCallbacks, View.OnClickListener {
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String ARG_LUGAR_ID="lugar_id";
     MapView mapView;
     EditText et_direccion;
     Marker ubicacion;
@@ -70,6 +70,7 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
     private EditText et_nombre;
     private EditText et_referencias;
     private EditText et_caracteristicas;
+    private boolean toEdit=false;
 
     public AgregarLugarFragment() {
         // Required empty public constructor
@@ -82,7 +83,14 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
         fragment.setArguments(args);
         return fragment;
     }
-
+    public static AgregarLugarFragment newInstance(int sectionNumber, int id) {
+        AgregarLugarFragment fragment = new AgregarLugarFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putInt(ARG_LUGAR_ID, id);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,8 +98,12 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
         // Inflate the layout for this fragment
         macondoDbManager = new MacondoDbManger(this.getActivity());
         lugar = new LugarEntidad();
+        if (savedInstanceState != null) {
+            int id = savedInstanceState.getInt(ARG_LUGAR_ID, 0);
+            lugar = macondoDbManager.cargarLugar(id);
+        }
         if (getArguments() != null) {
-            int id = getArguments().getInt("id", 0);
+            int id = getArguments().getInt(ARG_LUGAR_ID, 0);
             lugar = macondoDbManager.cargarLugar(id);
         }
         et_nombre = (EditText) view.findViewById(R.id.et_nombre);
@@ -127,6 +139,18 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
             lugar.setUri_foto(savedInstanceState.getString(MacondoDbManger.LugarTable.Columns.PATH_FOTO));
             lugar.setUri_thumb_foto(savedInstanceState.getString(MacondoDbManger.LugarTable.Columns.THUMB_FOTO));
             imgLugar.setImageURI(Uri.parse("file:" + lugar.getUri_foto()));
+        }
+        if(lugar.getId()!=0){
+            toEdit=true;
+            et_nombre.setText(lugar.getNombre());
+            et_direccion.setText(lugar.getDireccion());
+            et_caracteristicas.setText(lugar.getCaracteristicas());
+            et_referencias.setText(lugar.getReferencias());
+            imgLugar.setImageURI(Uri.parse("file:" + lugar.getUri_foto()));
+            Location location=new Location("");
+            location.setLatitude(lugar.getLatitud());
+            location.setLongitude(lugar.getLongitud());
+            onLocationChanged(location);
         }
         return view;
     }
@@ -279,6 +303,7 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
         LatLng latLng = new LatLng(argLocation.getLatitude(), argLocation.getLongitude());
         if (ubicacion == null) {
             ubicacion = mMap.addMarker(new MarkerOptions().position(latLng));
+            ubicacion.setDraggable(true);
         } else {
             ubicacion.setPosition(latLng);
         }
@@ -296,6 +321,7 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
         super.onSaveInstanceState(outState);
         outState.putString(MacondoDbManger.LugarTable.Columns.PATH_FOTO, lugar.getUri_foto());
         outState.putString(MacondoDbManger.LugarTable.Columns.THUMB_FOTO, lugar.getUri_thumb_foto());
+        outState.putInt(ARG_LUGAR_ID, lugar.getId());
     }
 
     /**
@@ -334,7 +360,11 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
                     lugar.setDireccion(et_direccion.getText().toString().trim());
                     lugar.setReferencias(et_referencias.getText().toString().trim());
                     lugar.setCaracteristicas(et_caracteristicas.getText().toString().trim());
-                    macondoDbManager.insertar(lugar);
+                    if(toEdit){
+                        macondoDbManager.modificar(lugar);
+                    }else {
+                        macondoDbManager.insertar(lugar);
+                    }
                     myLocationManager.removeUpdates(mLocationListener);
                     getActivity().getSupportFragmentManager().popBackStack();
                 }
@@ -379,4 +409,6 @@ public class AgregarLugarFragment extends Fragment implements GoogleMap.OnMarker
             }
         }
     }
+
+
 }

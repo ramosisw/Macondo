@@ -24,6 +24,7 @@ public class MacondoDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL(String.format("DROP TABLE IF EXISTS %s;",MacondoDbManger.LugarTable.NAME));
+        onCreate(sqLiteDatabase);
     }
 }

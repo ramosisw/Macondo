@@ -12,4 +12,5 @@ public class Section {
             MAPA = 2;
     public static final int LUGAR_NUEVO = 3;
     public static final int LUGAR_VER = 4;
+    public static final int LUGAR_EDITAR = 5;
 }

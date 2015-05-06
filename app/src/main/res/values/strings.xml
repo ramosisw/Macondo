@@ -21,6 +21,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_section_nuevo_lugar">Agregar Lugar</string>
+    <string name="title_section_editar_lugar">Editar Lugar</string>
     <string name="str_nombre">Nombre</string>
     <string name="str_direccion">Direccion</string>
     <string name="str_referencias">Referencias</string>
